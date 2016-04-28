@@ -13,12 +13,28 @@
  */
 package com.facebook.presto.execution.resourceGroups;
 
-import com.facebook.presto.SessionRepresentation;
-import com.facebook.presto.sql.tree.Statement;
+import org.testng.annotations.Test;
 
-import java.util.Optional;
+import static org.testng.Assert.assertEquals;
 
-public interface ResourceGroupSelector
+public class TestResourceGroupId
 {
-    Optional<ResourceGroupId> match(Statement statement, SessionRepresentation session);
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testInvalid()
+    {
+        new ResourceGroupId("test.test");
+    }
+
+    @Test
+    public void testBasic()
+    {
+        new ResourceGroupId(new ResourceGroupId("test"), "test");
+    }
+
+    @Test
+    public void testFromString()
+    {
+        ResourceGroupId id = new ResourceGroupId(new ResourceGroupId("test"), "test");
+        assertEquals(ResourceGroupId.fromString("test.test"), id);
+    }
 }

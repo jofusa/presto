@@ -13,12 +13,24 @@
  */
 package com.facebook.presto.execution.resourceGroups;
 
-import com.facebook.presto.SessionRepresentation;
-import com.facebook.presto.sql.tree.Statement;
+import io.airlift.units.DataSize;
 
-import java.util.Optional;
+import javax.annotation.concurrent.ThreadSafe;
 
-public interface ResourceGroupSelector
+@ThreadSafe
+public interface ConfigurableResourceGroup
 {
-    Optional<ResourceGroupId> match(Statement statement, SessionRepresentation session);
+    ResourceGroupId getId();
+
+    DataSize getSoftMemoryLimit();
+
+    void setSoftMemoryLimit(DataSize limit);
+
+    int getMaxRunningQueries();
+
+    void setMaxRunningQueries(int maxRunningQueries);
+
+    int getMaxQueuedQueries();
+
+    void setMaxQueuedQueries(int maxQueuedQueries);
 }

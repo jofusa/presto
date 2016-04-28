@@ -11,14 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.facebook.presto.execution.resourceGroups;
+package com.facebook.presto.memory;
 
-import com.facebook.presto.SessionRepresentation;
-import com.facebook.presto.sql.tree.Statement;
+import java.util.function.Consumer;
 
-import java.util.Optional;
-
-public interface ResourceGroupSelector
+public interface ClusterMemoryPoolManager
 {
-    Optional<ResourceGroupId> match(Statement statement, SessionRepresentation session);
+    void addChangeListener(MemoryPoolId poolId, Consumer<MemoryPoolInfo> listener);
 }

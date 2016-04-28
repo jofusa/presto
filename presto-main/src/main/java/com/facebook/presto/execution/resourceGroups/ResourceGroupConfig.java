@@ -13,12 +13,24 @@
  */
 package com.facebook.presto.execution.resourceGroups;
 
-import com.facebook.presto.SessionRepresentation;
-import com.facebook.presto.sql.tree.Statement;
+import io.airlift.configuration.Config;
 
-import java.util.Optional;
+import javax.validation.constraints.NotNull;
 
-public interface ResourceGroupSelector
+public class ResourceGroupConfig
 {
-    Optional<ResourceGroupId> match(Statement statement, SessionRepresentation session);
+    private String configFile;
+
+    @NotNull
+    public String getConfigFile()
+    {
+        return configFile;
+    }
+
+    @Config("resource-groups.config-file")
+    public ResourceGroupConfig setConfigFile(String configFile)
+    {
+        this.configFile = configFile;
+        return this;
+    }
 }
