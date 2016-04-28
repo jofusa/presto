@@ -328,36 +328,7 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>com.ning.maven.plugins</groupId>
-                <artifactId>maven-duplicate-finder-plugin</artifactId>
-                <configuration>
-                    <exceptions combine.children="append">
-                        <exception>
-                            <conflictingDependencies>
-                                <dependency>
-                                    <groupId>org.apache.cassandra</groupId>
-                                    <artifactId>cassandra-all</artifactId>
-                                </dependency>
-                                <dependency>
-                                    <groupId>org.apache.cassandra</groupId>
-                                    <artifactId>cassandra-thrift</artifactId>
-                                </dependency>
-                            </conflictingDependencies>
-                            <classes>
-                                <class>org.apache.cassandra.thrift.ITransportFactory</class>
-                                <class>org.apache.cassandra.thrift.TFramedTransportFactory</class>
-                            </classes>
-                        </exception>
-                    </exceptions>
-                    <ignoredDependencies>
-                        <dependency>
-                            <groupId>org.cassandraunit</groupId>
-                            <artifactId>cassandra-unit</artifactId>
-                        </dependency>
-                    </ignoredDependencies>
-                </configuration>
-            </plugin>
+
         </plugins>
     </build>
 

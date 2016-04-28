@@ -28,7 +28,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import io.airlift.log.Logger;
 import kafka.api.PartitionOffsetRequestInfo;
-import kafka.cluster.Broker;
+import kafka.cluster.BrokerEndPoint;
 import kafka.common.TopicAndPartition;
 import kafka.javaapi.OffsetRequest;
 import kafka.javaapi.OffsetResponse;
@@ -89,7 +89,7 @@ public class KafkaSplitManager
             for (PartitionMetadata part : metadata.partitionsMetadata()) {
                 log.debug("Adding Partition %s/%s", metadata.topic(), part.partitionId());
 
-                Broker leader = part.leader();
+                BrokerEndPoint leader = part.leader();
                 if (leader == null) { // Leader election going on...
                     log.warn("No leader for partition %s/%s found!", metadata.topic(), part.partitionId());
                     continue;
@@ -144,9 +144,10 @@ public class KafkaSplitManager
         return offsetResponse.offsets(topicName, partitionId);
     }
 
-    private static HostAddress brokerToHostAddress(Broker broker)
+    private static HostAddress brokerToHostAddress(BrokerEndPoint brokerEndPoint)
     {
-        return HostAddress.fromParts(broker.host(), broker.port());
+        // TODO: Support multiple security
+        return HostAddress.fromParts(brokerEndPoint.host(), brokerEndPoint.port());
     }
 
     private static <T> T selectRandom(Iterable<T> iterable)
